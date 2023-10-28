@@ -19,10 +19,10 @@ public class LoginScreen : MonoBehaviour
         LoginButton.onClick.AddListener(login);
 
        
-        if (File.Exists(Application.dataPath + "/credentials.txt"))
+        if (File.Exists($"{Application.dataPath}/TextFiles/credentials.txt"))
         {
             //creates an array with the login details from the file "credentials.txt"
-            credentials = new ArrayList(File.ReadAllLines(Application.dataPath + "/credentials.txt"));
+            credentials = new ArrayList(File.ReadAllLines($"{Application.dataPath}/TextFiles/credentials.txt"));
         }
         else
         {
