@@ -29,7 +29,7 @@ public class TutorialsScreen : MonoBehaviour
 
     private void timesTableClicked()
     {
-        tutorial = "Times Table";
+        tutorial = "Times Tables";
         SceneManager.LoadScene("Tutorial");
     }
 
