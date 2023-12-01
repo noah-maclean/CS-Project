@@ -20,26 +20,29 @@ public class QuestionLogic : MonoBehaviour
     //array containing the positions that the question area will appear in throughout the game
     //random positions could be implemented to make the game more varied
     //random positions could also be implemented for the platforms so that multiple environments wouldn't need to be made 
-    private Vector2[] positions = new [] { new Vector2 ( 4f, 0f ) ,
+    private Vector2[] questionAreaPositions = new[] { new Vector2 ( 4f, 0f ) ,
                                            new Vector2 ( 33f, 0f ),
                                            new Vector2 ( 60f, 0f) };
 
     //2D array containing the questions and their answers
-    private string[,] questions = new string[,] { { "What is 7 + 5?", "What is 9 + 1?", "What is 10 - 4?" }, { "12", "10", "6" } };
+    [HideInInspector] public static string[,] questions = new string[,] { { "What is 7 + 5?", "What is 9 + 1?", "What is 10 - 4?" }, { "12", "10", "6" } };
 
-    private int questionNum;
+    [HideInInspector] public static int questionNum;
     [HideInInspector] public static int score;
-    [HideInInspector] public static bool questionActive;
+    //[HideInInspector] public static bool questionActive;
+
+    [HideInInspector] public bool questionActive;
 
     private void Start()
     {
         //runs the "answer" function when the Submit button is clicked
-        submitButton.onClick.AddListener(answer);
+        //submitButton.onClick.AddListener(answer);
         questionNum = 0;
         
         //changes the text on the question to reflect the current question
-        questionLabel.text = $"Question {questionNum + 1}";
-        questionText.text = questions[0, questionNum];
+        //questionLabel.text = $"Question {questionNum + 1}";
+        //questionText.text = questions[0, questionNum];
+
         //questionText.text = questions[0, random.Range[0,2];
         //make the question that appears random?
         //probably need to make the random number a variable so that it can be used to find the answer
@@ -55,7 +58,7 @@ public class QuestionLogic : MonoBehaviour
         {
             //changes the questionActive variable from the questionSpawn script to false
             //CURRENTLY DOESN'T WORK
-            QuestionSpawn.questionActive = false;
+            questionActive = false;
 
             //outputs "Correct answer!"
             Debug.Log ( "Correct answer!" );
@@ -67,6 +70,9 @@ public class QuestionLogic : MonoBehaviour
             player.SetActive ( true );
             questionArea.SetActive ( true );
 
+            //moves the player back to the position they were in when they hit the question area
+            player.transform.position = QuestionSpawn.returnLocation;
+
             //adds 100 to the score
             score += 100;
 
@@ -77,14 +83,14 @@ public class QuestionLogic : MonoBehaviour
             if (questionNum < questions.GetLength(0))
             {
                 //move the question area to the next position
-                questionArea.transform.position = positions[questionNum + 1];
+                questionArea.transform.position = questionAreaPositions[questionNum + 1];
 
                 //increment the question number
-                questionNum++;
+                //questionNum++;
 
                 //change the question text to reflect the new question
-                questionLabel.text = $"Question {questionNum + 1}";
-                questionText.text = questions[0, questionNum];
+                //questionLabel.text = $"Question {questionNum + 1}";
+                //questionText.text = questions[0, questionNum];
             }
 
             else
@@ -95,7 +101,7 @@ public class QuestionLogic : MonoBehaviour
                 gameObject.SetActive( false );
 
                 //sets player to be visible
-                player.SetActive(true);
+                player.SetActive( true );
             }
         }
 
@@ -104,4 +110,5 @@ public class QuestionLogic : MonoBehaviour
             Debug.Log ( "Incorrect!" );
         }
     }
-}
+
+ }

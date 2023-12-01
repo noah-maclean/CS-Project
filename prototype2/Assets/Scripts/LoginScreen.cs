@@ -34,6 +34,7 @@ public class LoginScreen : MonoBehaviour
     void login()
     {
         bool isExists = false;
+        bool isTeacher = false;
 
         //loops for every string (item) in the credentials file
         foreach (string i in credentials) //foreach (var i in credentials)
@@ -47,11 +48,23 @@ public class LoginScreen : MonoBehaviour
             {
                 //sets isExists to true and breaks out of the loop
                 isExists = true;
+
+                if (i.ToString().Substring(0, i.ToString().IndexOf(":")).Equals("teacher"))
+                {
+                    isTeacher = true;
+                }
+
                 break;
             }
         }
 
-        if (isExists)
+        if (isExists && isTeacher)
+        {
+            //outputs "Logging in 'username'" and runs loadOptionsScreen function
+            Debug.Log($"Logging in {UsernameInput.text}");
+            loadTeacherScreen();
+        }
+        else if (isExists && !isTeacher)
         {
             //outputs "Logging in 'username'" and runs loadOptionsScreen function
             Debug.Log($"Logging in {UsernameInput.text}");
@@ -67,5 +80,11 @@ public class LoginScreen : MonoBehaviour
     {
         //loads the Options Screen scene
         SceneManager.LoadScene("OptionsScreen");
+    }
+
+    void loadTeacherScreen()
+    {
+        //loads the Teacher Screen scene
+        SceneManager.LoadScene("TeacherScreen");
     }
 }
