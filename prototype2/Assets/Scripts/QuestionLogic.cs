@@ -31,6 +31,8 @@ public class QuestionLogic : MonoBehaviour
     [HideInInspector] public static int score;
     //[HideInInspector] public static bool questionActive;
 
+    [HideInInspector] public bool questionActive;
+
     private void Start()
     {
         //runs the "answer" function when the Submit button is clicked
@@ -56,7 +58,7 @@ public class QuestionLogic : MonoBehaviour
         {
             //changes the questionActive variable from the questionSpawn script to false
             //CURRENTLY DOESN'T WORK
-            QuestionSpawn.questionActive = false;
+            questionActive = false;
 
             //outputs "Correct answer!"
             Debug.Log ( "Correct answer!" );
@@ -84,7 +86,7 @@ public class QuestionLogic : MonoBehaviour
                 questionArea.transform.position = questionAreaPositions[questionNum + 1];
 
                 //increment the question number
-                questionNum++;
+                //questionNum++;
 
                 //change the question text to reflect the new question
                 //questionLabel.text = $"Question {questionNum + 1}";

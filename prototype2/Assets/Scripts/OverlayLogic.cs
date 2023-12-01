@@ -13,24 +13,35 @@ public class OverlayLogic : MonoBehaviour
     public TMP_Text topicText;
     private static int score;
     [HideInInspector] public static string topic;
-    [HideInInspector] public static bool questionActive;
+    //[HideInInspector] public bool questionActive;
+
+    public GameObject overlayCanvas;
+
+    
+
+    private void Start()
+    {
+        //GameObject.Find("Player").GetComponent<Answer>().questionActive = false;
+        //gameObject.SetActive(true);
+        overlayCanvas.SetActive(true);
+    }
 
     private void Update()
     {
         //NOT CURRENTLY WORKING
-        //overlay dissapears during first question but doesn't return after question answered
+        //overlay disappears during first question but doesn't return after question answered
 
-        //if (QuestionSpawn.questionActive == true ) 
+        //if (GameObject.Find("Player").GetComponent<Answer>().questionActive == true)
         //{
-        //    gameObject.SetActive (false); 
+        //    gameObject.SetActive(false);
         //}
-        //else if (QuestionSpawn.questionActive == false )
+        //else if (GameObject.Find("Player").GetComponent<Answer>().questionActive == false)
         //{
-        //    gameObject.SetActive (true);
+        //    gameObject.SetActive(true);
         //}
 
         //score is updated as soon as score changes in the questionLogic script
-        score = QuestionLogic.score;
+        score = GameObject.Find("Player").GetComponent<QuestionSpawn>().score;
 
         //displays the score on the screen
         scoreText.text = $"Score: {score}";
