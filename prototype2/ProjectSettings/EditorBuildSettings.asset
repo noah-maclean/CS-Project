@@ -24,9 +24,15 @@ EditorBuildSettings:
     path: Assets/Scenes/MainGame.unity
     guid: 55d6f412aec7d4b47b60f4a9e7ebb7a9
   - enabled: 1
+    path: Assets/Scenes/QuestionScreen.unity
+    guid: 4dfd9733faf4e214bb897aeefc606e9a
+  - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 59c77e68178e6f842ba7bc9d34ad7c53
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 0e3d382dd3a50bd449ba16a9695db684
+  - enabled: 1
+    path: Assets/Scenes/TeacherScreen.unity
+    guid: c22eeb988801aab4f80d5f5c93bbc90a
   m_configObjects: {}

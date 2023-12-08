@@ -1,0 +1,4 @@
+repository "Prototype2@rawmonster@cloud"
+  path "/"
+    br "/main"
+    co "/main"

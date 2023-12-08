@@ -49,6 +49,7 @@ public class LoginScreen : MonoBehaviour
                 //sets isExists to true and breaks out of the loop
                 isExists = true;
 
+                //if the username is "teacher", then isTeacher is set to true
                 if (i.ToString().Substring(0, i.ToString().IndexOf(":")).Equals("teacher"))
                 {
                     isTeacher = true;
