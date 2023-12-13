@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Answer : MonoBehaviour
 {
@@ -144,13 +145,27 @@ public class Answer : MonoBehaviour
         {
             for (int i = 0; i < numAnswers; i++)
             {
+                //pos is used as a temporary variable
+                pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
+
+                //if pos is in the answerPositions array, then a new pos value is generated
+                //OR if pos is where the player spawns (x = -50)
+                while (pos.x == -50 || answerPositions.Contains(pos))
+                {
+                    pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
+                }
+
                 // adds random numbers to the answerPositions array with an x value in the range -40 to -60 
                 // and y value in the range -3 to 0
-                answerPositions[i] = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
+                answerPositions[i] = pos;
+
+                //the positions of the answers and the texts are moved to the correct position
                 answers[i].transform.position = answerPositions[i];
                 answersTexts[i].GetComponent<RectTransform>().position = answerPositions[i];
 
                 //creates an array with the answer values for the current question
+                //creates duplicate answers often
+                //TODO ensure that duplicate answers aren't created
                 answerValues[i] = randAns.Next(1, correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum] * 2);
 
                 if (i == correctAnsNum)

@@ -28,18 +28,6 @@ public class OverlayLogic : MonoBehaviour
 
     private void Update()
     {
-        //NOT CURRENTLY WORKING
-        //overlay disappears during first question but doesn't return after question answered
-
-        //if (GameObject.Find("Player").GetComponent<Answer>().questionActive == true)
-        //{
-        //    gameObject.SetActive(false);
-        //}
-        //else if (GameObject.Find("Player").GetComponent<Answer>().questionActive == false)
-        //{
-        //    gameObject.SetActive(true);
-        //}
-
         //score is updated as soon as score changes in the questionLogic script
         score = GameObject.Find("Player").GetComponent<QuestionSpawn>().score;
 
