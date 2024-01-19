@@ -64,25 +64,17 @@ public class QuestionSpawn : MonoBehaviour
         //if the game object that the player has collided with has the "Question" tag:
         if (collision.gameObject.tag == "Question")
         {
-            //GameObject.Find("Player").GetComponent<Answer>().questionActive = true;
-
-            //GameObject.Find("OverlayCanvas").SetActive(false);
+            
             overlayCanvas.SetActive(false);
             answersCanvas.SetActive(true);
 
             Debug.Log($"Question {questionNum + 1}");
 
-            //sets the question area and player to not be visible
-            //collision.gameObject.SetActive(false);
-            //gameObject.SetActive(false);
-
-            //sets the question to be visible
-            //question.SetActive(true);
-
             returnLocation = transform.position;
 
             transform.position = questionLocation;
 
+            //sets the question text at the top of the screen to be the current question
             questionText.text = questions[0, questionNum];
 
             //increments the question number 
@@ -108,34 +100,6 @@ public class QuestionSpawn : MonoBehaviour
             //load the Game Over scene
             SceneManager.LoadScene("GameOver");
         }
-
-        //if the game object that the player collides with is an answer:
-        //else if (collision.gameObject.tag == "Answer")
-        //{
-        //    //if the answer is answer number 1:
-        //    if (collision.gameObject == GameObject.Find("answers").GetComponent<Answer>().answers[0])
-        //    {
-
-        //    }
-
-        //    //else if answer is number 2:
-        //    else if (collision.gameObject == GameObject.Find("answers").GetComponent<Answer>().answers[1])
-        //    {
-
-        //    }
-
-        //    //else if answer is number 3:
-        //    else if (collision.gameObject == GameObject.Find("answers").GetComponent<Answer>().answers[2])
-        //    {
-
-        //    }
-
-        //    //else if answer is number 4:
-        //    else if (collision.gameObject == GameObject.Find("answers").GetComponent<Answer>().answers[3])
-        //    {
-
-        //    }
-        //}
     }
 
     private void Update()
