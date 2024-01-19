@@ -121,6 +121,9 @@ public class Answer : MonoBehaviour
         {
             for (int i = 0; i < numAnswers; i++)
             {
+                answers[i].SetActive(true);
+                answersTexts[i].enabled = true;
+
                 //pos is used as a temporary variable
                 //change pos to int pos = new Vector2(UnityEngine.Random.Range(-60, -40), UnityEngine.Random.Range(-3, 0))
                 pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));

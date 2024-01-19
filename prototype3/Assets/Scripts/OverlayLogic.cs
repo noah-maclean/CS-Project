@@ -9,15 +9,16 @@ using UnityEngine.UI;
 
 public class OverlayLogic : MonoBehaviour
 {
-    public TMP_Text scoreText;
+    public TMP_Text timerText;
     public TMP_Text topicText;
-    private static int score;
+    //private static int score;
+
+    //timeRemaining in seconds
+    private float timeRemaining = 180;
     [HideInInspector] public static string topic;
     //[HideInInspector] public bool questionActive;
 
-    public GameObject overlayCanvas;
-
-    
+    public GameObject overlayCanvas;    
 
     private void Start()
     {
@@ -29,11 +30,11 @@ public class OverlayLogic : MonoBehaviour
     private void Update()
     {
         //score is updated as soon as score changes in the questionLogic script
-        score = GameObject.Find("Player").GetComponent<QuestionSpawn>().score;
+        //score = GameObject.Find("Player").GetComponent<QuestionSpawn>().score;
 
         //displays the score on the screen
-        scoreText.text = $"Score: {score}";
-        
+        //scoreText.text = $"Score: {score}";
+                
         //if there is a topic:
         if (TopicsScreen.topic != null )
         {
@@ -49,5 +50,32 @@ public class OverlayLogic : MonoBehaviour
 
         //add timer to screen
         //if timer = 0, change to gameOver screen 
+
+        //displays the timer
+        //timerText.text = $"Time: {timeRemaining}";
+
+        if (timeRemaining > 0)
+        {
+            timeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            timeRemaining = 0;
+        }
+
+        displayTime();
+    }
+
+    private void displayTime()
+    {
+        if (timeRemaining < 0)
+        {
+            timeRemaining = 0;
+        }
+
+        float minutes = Mathf.FloorToInt(timeRemaining / 60);
+        float seconds = Mathf.FloorToInt(timeRemaining % 60);
+
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }
