@@ -176,7 +176,7 @@ public class Answer : MonoBehaviour
     {
         hintPanel.SetActive(true);
         gameObject.SetActive(false);
-
+        // add/change the hint text on the panel
     }
 
     private void backClicked()
