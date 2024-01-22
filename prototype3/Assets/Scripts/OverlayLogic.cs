@@ -14,7 +14,7 @@ public class OverlayLogic : MonoBehaviour
     //private static int score;
 
     //timeRemaining in seconds
-    private float timeRemaining = 180;
+    [HideInInspector] public float timeRemaining = 90;
     [HideInInspector] public static string topic;
     //[HideInInspector] public bool questionActive;
 

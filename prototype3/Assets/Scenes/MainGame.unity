@@ -506,8 +506,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1c51e713308244fbcb83111fcb3609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 234476250}
+  timerText: {fileID: 234476250}
   topicText: {fileID: 1454729975}
+  timeRemaining: 90
   overlayCanvas: {fileID: 176952006}
 --- !u!1 &234476248
 GameObject:
@@ -521,7 +522,7 @@ GameObject:
   - component: {fileID: 234476251}
   - component: {fileID: 234476250}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: TimerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4550,6 +4551,7 @@ MonoBehaviour:
   hintButton: {fileID: 1162595749}
   overlayCanvas: {fileID: 176952006}
   answersCanvas: {fileID: 35881997}
+  overlayLogic: {fileID: 176952011}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

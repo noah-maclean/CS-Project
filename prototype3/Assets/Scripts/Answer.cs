@@ -41,6 +41,10 @@ public class Answer : MonoBehaviour
     public GameObject overlayCanvas;
     public GameObject answersCanvas;
 
+    public OverlayLogic overlayLogic;
+    public QuestionSpawn questionSpawn;
+
+
     private void Start()
     {
         gameObject.SetActive(true);
@@ -97,7 +101,8 @@ public class Answer : MonoBehaviour
             GameObject.Find("Player").GetComponent<QuestionSpawn>().score += 100;
 
             //sets the saved value of the score to the updated score
-            PlayerPrefs.SetInt("playerScore", GameObject.Find("Player").GetComponent<QuestionSpawn>().score);
+            //PlayerPrefs.SetInt("playerScore", GameObject.Find("Player").GetComponent<QuestionSpawn>().score);
+
 
             //questionActive = false;
 
@@ -109,9 +114,10 @@ public class Answer : MonoBehaviour
         }
         else
         {
-            Debug.Log("Incorrect, try again");
+            Debug.Log("Incorrect (-15 seconds)");
             answers[num].SetActive(false);
             answersTexts[num].enabled = false;
+            overlayLogic.timeRemaining -= 15;
         }
     }
 

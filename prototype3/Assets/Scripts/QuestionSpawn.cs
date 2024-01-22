@@ -53,7 +53,8 @@ public class QuestionSpawn : MonoBehaviour
         score = 0;
 
         //Debug.Log(questions.GetLength(0));
-        PlayerPrefs.SetInt("playerScore", 0);
+        //PlayerPrefs.SetInt("playerScore", 0);
+        PlayerPrefs.SetInt("remainingTime", 0);
 
         answersCanvas.SetActive(false);
     }
