@@ -544,8 +544,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 312, y: 221.94}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 390.57, y: 221.94}
+  m_SizeDelta: {x: 109.58, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &234476250
 MonoBehaviour:
@@ -567,7 +567,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 01:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -0.045883175, y: 0, z: -0.000026617105, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4520,6 +4520,8 @@ MonoBehaviour:
   score: 0
   overlayCanvas: {fileID: 176952006}
   answersCanvas: {fileID: 35881997}
+  overlayPanel: {fileID: 1344988358}
+  overlayTopic: {fileID: 1454729975}
 --- !u!114 &7649853763637390735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4551,6 +4553,8 @@ MonoBehaviour:
   hintButton: {fileID: 1162595749}
   overlayCanvas: {fileID: 176952006}
   answersCanvas: {fileID: 35881997}
+  overlayPanel: {fileID: 1344988358}
+  overlayTopic: {fileID: 1454729975}
   overlayLogic: {fileID: 176952011}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
