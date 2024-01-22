@@ -41,12 +41,17 @@ public class Answer : MonoBehaviour
     public GameObject overlayCanvas;
     public GameObject answersCanvas;
 
+    public GameObject overlayPanel;
+    public TMP_Text overlayTopic;
+
     public OverlayLogic overlayLogic;
-    public QuestionSpawn questionSpawn;
+    //public QuestionSpawn questionSpawn;
 
 
     private void Start()
     {
+        //overlayTopic = overlayCanvas.GetComponentInChildren<TMP_Text>();
+
         gameObject.SetActive(true);
         hintPanel.SetActive(false);
 
@@ -107,7 +112,10 @@ public class Answer : MonoBehaviour
             //questionActive = false;
 
             //GameObject.Find("OverlayCanvas").SetActive(true);
-            overlayCanvas.SetActive(true);
+            //overlayCanvas.SetActive(true);
+            overlayPanel.SetActive(true);
+            //overlayTopic = overlayPanel.GetComponentInChildren<TMP_Text>();
+            overlayTopic.enabled = true;
             answersCanvas.SetActive(false);
 
             changeAnsPosVal();
@@ -131,7 +139,7 @@ public class Answer : MonoBehaviour
                 answersTexts[i].enabled = true;
 
                 //pos is used as a temporary variable
-                //change pos to int pos = new Vector2(UnityEngine.Random.Range(-60, -40), UnityEngine.Random.Range(-3, 0))
+                //change pos to int pos = new Vector2(UnityEngine.Random.Range(-60, -40), UnityEngine.Random.Range(-3, 0)) ??
                 pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
 
                 //if pos is in the answerPositions array, then a new pos value is generated

@@ -41,6 +41,9 @@ public class QuestionSpawn : MonoBehaviour
     public GameObject overlayCanvas;
     public GameObject answersCanvas;
 
+    public GameObject overlayPanel;
+    public TMP_Text overlayTopic;
+
     //public bool questionActive;
 
 
@@ -57,6 +60,9 @@ public class QuestionSpawn : MonoBehaviour
         PlayerPrefs.SetInt("remainingTime", 0);
 
         answersCanvas.SetActive(false);
+        overlayPanel.SetActive(true);
+       //overlayTopic = overlayCanvas.GetComponentInChildren<TMP_Text>();
+        overlayTopic.enabled = true;
     }
 
 
@@ -65,8 +71,14 @@ public class QuestionSpawn : MonoBehaviour
         //if the game object that the player has collided with has the "Question" tag:
         if (collision.gameObject.tag == "Question")
         {
+            //to allow the timer to be shown when the question is being answered
+            //could set only certain parts of the overlayCanvas to false
+            //(just the panel and the topic text)
             
-            overlayCanvas.SetActive(false);
+            //overlayCanvas.SetActive(false);
+            overlayPanel.SetActive(false);
+            overlayTopic.enabled = false;
+            
             answersCanvas.SetActive(true);
 
             Debug.Log($"Question {questionNum + 1}");
