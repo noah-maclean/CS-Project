@@ -115,7 +115,7 @@ public class QuestionSpawn : MonoBehaviour
 
         for (int i = 0; i < questions.GetLength(1); i++)
         {
-            //TODO make these numbers float somehow?!
+            //TODO make these numbers float somehow?! (DONE)
             correctAnswers[i] = float.Parse(questions[1, i]);
         }
     }
