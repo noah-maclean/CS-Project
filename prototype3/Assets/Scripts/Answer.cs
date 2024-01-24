@@ -178,7 +178,7 @@ public class Answer : MonoBehaviour
 
                 //creates an array with the answer values for the current question
                 //creates duplicate answers often
-                //TODO ensure that duplicate answers aren't created
+                //TODO ensure that duplicate answers aren't created (DONE)
                 float val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
 
                 while (answerValues.Contains(val) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
