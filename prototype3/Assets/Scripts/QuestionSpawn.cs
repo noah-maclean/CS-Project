@@ -1,5 +1,6 @@
 using System.Collections;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -28,8 +29,7 @@ public class QuestionSpawn : MonoBehaviour
     //array containing the positions that the question area will appear in throughout the game
     //random positions could be implemented to make the game more varied
     //random positions could also be implemented for the platforms so that multiple environments wouldn't need to be made 
-    [HideInInspector]
-    public static Vector2[] questionAreaPositions = new[] { new Vector2 ( 4f, 0f ),
+    [HideInInspector] public static Vector2[] questionAreaPositions = new[] { new Vector2 ( 4f, 0f ),
                                                             new Vector2 ( 33f, 0f ),
                                                             new Vector2 ( 60f, 0f ) };
 
@@ -38,9 +38,9 @@ public class QuestionSpawn : MonoBehaviour
     //{ "12", "10", "6" } };
 
     ArrayList questionData;
-    public static string[,] questions = new string[2,3];
+    public string[,] questions = new string[2,3];
 
-    public static int[] correctAnswers = new int[3];
+    public static float[] correctAnswers = new float[3];
 
     [HideInInspector] public int questionNum;
     //[HideInInspector] public int score;
@@ -82,30 +82,41 @@ public class QuestionSpawn : MonoBehaviour
         }
 
         //foreach var item{
-        //if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TutorialsScreen.tutorial))
-        // add up to ; to questions array [0]
-        // add from ; to end to questions array [1]
+        //    if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TutorialsScreen.tutorial))
+        //        add up to; to questions array[0]
+        // add from; to end to questions array[1]
         // }
 
         int count = 0;
         foreach (var item in questionData)
         {
-            if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TopicsScreen.topic))
+            if (TopicsScreen.topicVal != null)
             {
-                int index1 = item.ToString().IndexOf(":");
-                int index2 = item.ToString().IndexOf(";");
+                if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TopicsScreen.topicVal))
+                //if (item.ToString()[..item.ToString().IndexOf(":")] == TopicsScreen.topicVal)
+                {
+                    int index1 = item.ToString().IndexOf(":");
+                    int index2 = item.ToString().IndexOf(";");
 
-                //takes the substring from the index after ":" with the length of (index2 - index1 - 1)
-                questions[0, count] = item.ToString().Substring(index1 + 1, index2 - index1 - 1);
-                questions[1, count] = item.ToString().Substring(index2 + 1, item.ToString().Length - index2 - 1);
+                    //takes the substring from the index after ":" with the length of (index2 - index1 - 1)
+                    questions[0, count] = item.ToString().Substring(index1 + 1, index2 - index1 - 1);
+                    questions[1, count] = item.ToString().Substring(index2 + 1, item.ToString().Length - index2 - 1);
 
-                count++;
+                    //Debug.Log(questions[0, count] + questions[1, count]);
+
+                    count++;
+                }
+            }
+            else
+            {
+                Debug.Log("Error, no topic");
             }
         }
 
         for (int i = 0; i < questions.GetLength(1); i++)
         {
-            correctAnswers[i] = int.Parse(questions[1, i]);
+            //TODO make these numbers float somehow?!
+            correctAnswers[i] = float.Parse(questions[1, i]);
         }
     }
 
@@ -138,7 +149,7 @@ public class QuestionSpawn : MonoBehaviour
             questionNum++;
 
             //moves questionArea to next position
-            //questions.GetLength(0) returns 2 so must use <=
+            //questions.GetLength(0) returns 2 when length is 3 so must use <=
             if (questionNum <= questions.GetLength(0))
             {
                 questionArea.transform.position = questionAreaPositions[questionNum];

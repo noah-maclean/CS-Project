@@ -19,7 +19,7 @@ public class Answer : MonoBehaviour
     public Vector2[] answerPositions = new Vector2[numAnswers];
     private Vector2 pos;
 
-    public static int[] answerValues = new int[numAnswers];
+    public static float[] answerValues = new float[numAnswers];
 
     //private int[] correctAnswers = new int[numAnswers];
 
@@ -47,9 +47,14 @@ public class Answer : MonoBehaviour
     public OverlayLogic overlayLogic;
     //public QuestionSpawn questionSpawn;
 
+    
+    private QuestionSpawn questionSpawnScript;
 
     private void Start()
     {
+        //replaced GameObject.Find("Player").GetComponent<QuestionSpawn>() with a variable so that the Find and GetComponent functions will only need to be called once
+        questionSpawnScript = GameObject.Find("Player").GetComponent<QuestionSpawn>();
+
         //overlayTopic = overlayCanvas.GetComponentInChildren<TMP_Text>();
 
         gameObject.SetActive(true);
@@ -133,9 +138,12 @@ public class Answer : MonoBehaviour
         }
     }
 
+    //after making it so that questions and answers are stored in a text file
+    //this function causes the game to not load at all
     private void changeAnsPosVal()
     {
-        if (GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum <= QuestionSpawn.questions.GetLength(0))
+        //if (GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum <= GameObject.Find("Player").GetComponent<QuestionSpawn>().questions.GetLength(0))
+        if (questionSpawnScript.questionNum <= questionSpawnScript.questions.GetLength(0))
         {
             for (int i = 0; i < numAnswers; i++)
             {
@@ -171,11 +179,11 @@ public class Answer : MonoBehaviour
                 //creates an array with the answer values for the current question
                 //creates duplicate answers often
                 //TODO ensure that duplicate answers aren't created
-                int val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum] * 2);
+                float val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
 
-                while (answerValues.Contains(val) || val == QuestionSpawn.correctAnswers[i])
+                while (answerValues.Contains(val) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
                 {
-                    val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum] * 2);
+                    val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
                 }
 
                 answerValues[i] = val;
@@ -184,7 +192,7 @@ public class Answer : MonoBehaviour
                 if (i == correctAnsNum)
                 {
                     isCorrectAns[i] = true;
-                    answerValues[i] = QuestionSpawn.correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum];
+                    answerValues[i] = QuestionSpawn.correctAnswers[questionSpawnScript.questionNum];
                 }
 
                 else
