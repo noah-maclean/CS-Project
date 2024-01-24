@@ -64,6 +64,8 @@ public class OverlayLogic : MonoBehaviour
         }
 
         displayTime();
+
+        PlayerPrefs.SetFloat("RemainingTime", timeRemaining);
     }
 
     private void displayTime()

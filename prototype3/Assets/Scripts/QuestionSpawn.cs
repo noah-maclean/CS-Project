@@ -1,3 +1,6 @@
+using System.Collections;
+using System.IO;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,11 +34,16 @@ public class QuestionSpawn : MonoBehaviour
                                                             new Vector2 ( 60f, 0f ) };
 
     //2D array containing the questions and their answers
-    [HideInInspector] public static string[,] questions = new string[,] { { "What is 7 + 5?", "What is 9 + 1?", "What is 10 - 4?" }, 
-                                                                          { "12", "10", "6" } };
+    //[HideInInspector] public static string[,] questions = new string[,] { { "What is 7 + 5?", "What is 9 + 1?", "What is 10 - 4?" }, 
+    //{ "12", "10", "6" } };
+
+    ArrayList questionData;
+    public static string[,] questions = new string[2,3];
+
+    public static int[] correctAnswers = new int[3];
 
     [HideInInspector] public int questionNum;
-    [HideInInspector] public int score;
+    //[HideInInspector] public int score;
 
     //GameObject overlay = GameObject.Find("OverlayCanvas");
     public GameObject overlayCanvas;
@@ -53,16 +61,52 @@ public class QuestionSpawn : MonoBehaviour
         questionNum = 0;
 
         //initiates score to 0
-        score = 0;
+        //score = 0;
 
         //Debug.Log(questions.GetLength(0));
         //PlayerPrefs.SetInt("playerScore", 0);
-        PlayerPrefs.SetInt("remainingTime", 0);
+        //PlayerPrefs.SetInt("remainingTime", 0);
 
         answersCanvas.SetActive(false);
         overlayPanel.SetActive(true);
-       //overlayTopic = overlayCanvas.GetComponentInChildren<TMP_Text>();
+        //overlayTopic = overlayCanvas.GetComponentInChildren<TMP_Text>();
         overlayTopic.enabled = true;
+
+        if (File.Exists($"{Application.dataPath}/TextFiles/questionData.txt"))
+        {
+            questionData = new ArrayList(File.ReadAllLines($"{Application.dataPath}/TextFiles/questionData.txt"));
+        }
+        else
+        {
+            Debug.Log("Question data file doesn't exist");
+        }
+
+        //foreach var item{
+        //if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TutorialsScreen.tutorial))
+        // add up to ; to questions array [0]
+        // add from ; to end to questions array [1]
+        // }
+
+        int count = 0;
+        foreach (var item in questionData)
+        {
+            if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TopicsScreen.topic))
+            {
+                int index1 = item.ToString().IndexOf(":");
+                int index2 = item.ToString().IndexOf(";");
+
+                //takes the substring from the index after ":" with the length of (index2 - index1 - 1)
+                questions[0, count] = item.ToString().Substring(index1 + 1, index2 - index1 - 1);
+                questions[1, count] = item.ToString().Substring(index2 + 1, item.ToString().Length - index2 - 1);
+
+                count++;
+            }
+        }
+
+        for (int i = 0; i < questions.GetLength(1); i++)
+        {
+            correctAnswers[i] = int.Parse(questions[1, i]);
+        }
     }
 
 

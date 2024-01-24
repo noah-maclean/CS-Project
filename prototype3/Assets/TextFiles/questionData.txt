@@ -1,1 +1,8 @@
 topic:question;answer
+timesTables:3 x 6 = ?;18
+timesTables:7 x 3 = ?;21
+timesTables:2 x 5 = ?;10
+placeValue:
+percentages:
+bidmas:
+fractions:

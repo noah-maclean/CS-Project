@@ -13,7 +13,7 @@ public class Answer : MonoBehaviour
 
     public TMP_Text[] answersTexts = new TMP_Text[numAnswers];
 
-    [SerializeField] public GameObject[] answers = new GameObject[numAnswers];
+    public GameObject[] answers = new GameObject[numAnswers];
 
 
     public Vector2[] answerPositions = new Vector2[numAnswers];
@@ -21,7 +21,7 @@ public class Answer : MonoBehaviour
 
     public static int[] answerValues = new int[numAnswers];
 
-    private int[] correctAnswers = new int[numAnswers];
+    //private int[] correctAnswers = new int[numAnswers];
 
     private System.Random randX = new System.Random();
     private System.Random randY = new System.Random();
@@ -60,10 +60,14 @@ public class Answer : MonoBehaviour
         backButton.onClick.AddListener(backClicked);
 
         //creates an array with the correct answers for each question
-        for (int i = 0; i < QuestionSpawn.questions.GetLength(1); i++)
-        {
-            correctAnswers[i] = int.Parse(QuestionSpawn.questions[1, i]);
-        }
+        //correctAnswers array is created before the questions array is populated
+        //move to QuestionSpawn script and access from there ?
+        //for (int i = 0; i < QuestionSpawn.questions.GetLength(1); i++)
+        //{
+        //    correctAnswers[i] = int.Parse(QuestionSpawn.questions[1, i]);
+        //}
+        
+        
 
         //chooses a random answer to be the correct answer by selecting an integer between 0 and 3
         correctAnsNum = randAns.Next(0, 3);
@@ -103,7 +107,7 @@ public class Answer : MonoBehaviour
         {
             Debug.Log("Correct");
             transform.position = QuestionSpawn.returnLocation;
-            GameObject.Find("Player").GetComponent<QuestionSpawn>().score += 100;
+            //GameObject.Find("Player").GetComponent<QuestionSpawn>().score += 100;
 
             //sets the saved value of the score to the updated score
             //PlayerPrefs.SetInt("playerScore", GameObject.Find("Player").GetComponent<QuestionSpawn>().score);
@@ -140,7 +144,10 @@ public class Answer : MonoBehaviour
 
                 //pos is used as a temporary variable
                 //change pos to int pos = new Vector2(UnityEngine.Random.Range(-60, -40), UnityEngine.Random.Range(-3, 0)) ??
-                pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
+                //pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
+
+                //changed y values to between -1 and 0, so that all the answers spawn above the user
+                pos = new Vector2(randX.Next(-60, -40), randY.Next(-1, 1));
 
                 //if pos is in the answerPositions array, then a new pos value is generated
                 //OR if pos is where the player spawns (x = -50)
@@ -148,7 +155,9 @@ public class Answer : MonoBehaviour
                 //if position is between -52 and -48 (2 either side of 50 (the middle))
                 while ((pos.x >= -52 && pos.x <= -48) || answerPositions.Contains(pos))
                 {
-                    pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
+                    //pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
+                    //changed y values to between -1 and 0, so that all the answers spawn above the user
+                    pos = new Vector2(randX.Next(-60, -40), randY.Next(-1, 1));
                 }
 
                 // adds random numbers to the answerPositions array with an x value in the range -40 to -60 
@@ -162,11 +171,11 @@ public class Answer : MonoBehaviour
                 //creates an array with the answer values for the current question
                 //creates duplicate answers often
                 //TODO ensure that duplicate answers aren't created
-                int val = UnityEngine.Random.Range(1, correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum] * 2);
+                int val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum] * 2);
 
-                while (answerValues.Contains(val))
+                while (answerValues.Contains(val) || val == QuestionSpawn.correctAnswers[i])
                 {
-                    val = UnityEngine.Random.Range(1, correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum] * 2);
+                    val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum] * 2);
                 }
 
                 answerValues[i] = val;
@@ -175,7 +184,7 @@ public class Answer : MonoBehaviour
                 if (i == correctAnsNum)
                 {
                     isCorrectAns[i] = true;
-                    answerValues[i] = correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum];
+                    answerValues[i] = QuestionSpawn.correctAnswers[GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum];
                 }
 
                 else
