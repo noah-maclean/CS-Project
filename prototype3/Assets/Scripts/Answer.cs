@@ -29,6 +29,7 @@ public class Answer : MonoBehaviour
     private System.Random randAns = new System.Random();
     private int correctAnsNum;
     private bool[] isCorrectAns = new bool[numAnswers];
+    private bool integerAns;
 
     public GameObject hintPanel;
     public Button hintButton;
@@ -179,25 +180,49 @@ public class Answer : MonoBehaviour
                 //creates an array with the answer values for the current question
                 //creates duplicate answers often
                 //TODO ensure that duplicate answers aren't created (DONE)
-                float val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
+                float val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
 
                 while (answerValues.Contains(val) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
                 {
-                    val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
+                    val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
                 }
 
-                answerValues[i] = val;
-
+                
+                //when answers were changed to a float to allow for decimals, all answers had lots of decimal points
+                //to fix this i used rounding
+                //if num is an integer, then num - Round(num) = 0, so it is an integer answer
+                if (QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] - Math.Round(QuestionSpawn.correctAnswers[questionSpawnScript.questionNum]) == 0)
+                {
+                    integerAns = true;
+                }
 
                 if (i == correctAnsNum)
                 {
                     isCorrectAns[i] = true;
-                    answerValues[i] = QuestionSpawn.correctAnswers[questionSpawnScript.questionNum];
+                    if (integerAns)
+                    {
+                        answerValues[i] = QuestionSpawn.correctAnswers[questionSpawnScript.questionNum];
+                    }
+                    else if (!integerAns)
+                    {
+                        answerValues[i] = (float)Math.Round(QuestionSpawn.correctAnswers[questionSpawnScript.questionNum], 2);
+                    }
                 }
 
                 else
                 {
                     isCorrectAns[i] = false;
+
+                    //if the number is an integer, then round the value to no decimal places and make it an int
+                    if (integerAns)
+                    {
+                        answerValues[i] = (int)Math.Round(val); 
+                    }
+                    //if number is not an integer, then round the value to 2 decimal places and make it a float
+                    else if (!integerAns)
+                    {
+                        answerValues[i] = (float)Math.Round(val, 2);
+                    }
                 }
 
                 //Debug.Log(answerValues[i].ToString());
