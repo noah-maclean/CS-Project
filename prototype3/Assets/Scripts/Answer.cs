@@ -177,24 +177,46 @@ public class Answer : MonoBehaviour
                 answers[i].transform.position = answerPositions[i];
                 answersTexts[i].GetComponent<RectTransform>().position = answerPositions[i];
 
-                //creates an array with the answer values for the current question
-                //creates duplicate answers often
-                //TODO ensure that duplicate answers aren't created (DONE)
-                float val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
 
-                while (answerValues.Contains(val) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
-                {
-                    val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
-                }
-
-                
                 //when answers were changed to a float to allow for decimals, all answers had lots of decimal points
-                //to fix this i used rounding
+                //to fix this I used rounding
                 //if num is an integer, then num - Round(num) = 0, so it is an integer answer
                 if (QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] - Math.Round(QuestionSpawn.correctAnswers[questionSpawnScript.questionNum]) == 0)
                 {
                     integerAns = true;
                 }
+
+
+                //creates an array with the answer values for the current question
+                //creates duplicate answers often
+                //TODO ensure that duplicate answers aren't created (DONE)
+
+                //using round on val causes the percentages and fractions topics to not load
+
+                //float val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
+                float val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
+                if (integerAns)
+                {
+                    while (answerValues.Contains((int)Math.Round(val)) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
+                    {
+                        //val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
+                        val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
+                    }
+                }
+                else
+                {
+                    //Contains cannot be used as it does not allow for float to be evaluated
+                    //instead the Any function checks if any number - val is zero 
+                    while (answerValues.Any(num => Math.Abs(num - (float)Math.Round(val, 2)) == 0) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
+                    {
+                        //val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
+                        val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
+                    }
+                }
+                
+
+                
+                
 
                 if (i == correctAnsNum)
                 {

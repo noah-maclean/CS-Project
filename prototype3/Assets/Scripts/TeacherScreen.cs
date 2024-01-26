@@ -1,18 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TeacherScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button studentScoresButton;
+    public Button addLoginsButton;
+    public Button removeLoginsButton;
+
+    private void Start()
     {
-        
+        studentScoresButton.onClick.AddListener(studentScoresClicked);
+        addLoginsButton.onClick.AddListener(addLoginsClicked);
+        removeLoginsButton.onClick.AddListener(removeLoginsClicked);
     }
 
-    // Update is called once per frame
-    void Update()
+    void studentScoresClicked()
     {
-        
+        SceneManager.LoadScene("StudentScores");
+    }
+
+    void addLoginsClicked()
+    {
+        SceneManager.LoadScene("AddLogins");
+    }
+
+    void removeLoginsClicked()
+    {
+        SceneManager.LoadScene("RemoveLogins");
     }
 }
