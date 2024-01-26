@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstInput: {fileID: 2103593099}
-  loginButton: {fileID: 247763513}
+  submitButton: {fileID: 247763513}
 --- !u!1 &466677818
 GameObject:
   m_ObjectHideFlags: 0

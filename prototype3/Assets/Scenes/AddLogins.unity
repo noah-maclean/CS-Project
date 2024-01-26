@@ -996,7 +996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstInput: {fileID: 1870886249}
-  loginButton: {fileID: 513462092}
+  submitButton: {fileID: 513462092}
 --- !u!114 &591673031
 MonoBehaviour:
   m_ObjectHideFlags: 0

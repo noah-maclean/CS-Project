@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class LoginInput : MonoBehaviour
+public class MenuInput : MonoBehaviour
 {
 
     EventSystem system;
     public Selectable firstInput;
-    public Button loginButton;
+    public Button submitButton;
 
     void Start()
     {
@@ -43,7 +43,7 @@ public class LoginInput : MonoBehaviour
         //if the enter key is pressed, the game will press the log in button
         else if (Input.GetKeyDown(KeyCode.Return))
         {
-            loginButton.onClick.Invoke();
+            submitButton.onClick.Invoke();
         }
     }
 }
