@@ -61,6 +61,7 @@ public class OverlayLogic : MonoBehaviour
         else
         {
             timeRemaining = 0;
+            loadGameOver();
         }
 
         displayTime();
@@ -79,5 +80,11 @@ public class OverlayLogic : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeRemaining % 60);
 
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    void loadGameOver()
+    {
+        SceneManager.LoadScene("GameOver");
+        PlayerPrefs.SetFloat("RemainingTime", timeRemaining);
     }
 }
