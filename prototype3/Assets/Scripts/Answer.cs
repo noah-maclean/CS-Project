@@ -141,6 +141,7 @@ public class Answer : MonoBehaviour
 
     //after making it so that questions and answers are stored in a text file
     //this function causes the game to not load at all
+    //FIXED
     private void changeAnsPosVal()
     {
         //if (GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum <= GameObject.Find("Player").GetComponent<QuestionSpawn>().questions.GetLength(0))

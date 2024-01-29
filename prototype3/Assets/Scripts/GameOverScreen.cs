@@ -1,8 +1,10 @@
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +22,12 @@ public class GameOverScreen : MonoBehaviour
 
     private string username;
     ArrayList scoreData;
+
+    bool containsUser;
+    bool newHighScore;
+    bool isTopicCurrent;
+    string temp;
+    
 
     private void Start()
     {
@@ -74,26 +82,135 @@ public class GameOverScreen : MonoBehaviour
 
     void saveUserScore()
     {
-        scoreData = new ArrayList(File.ReadAllLines($"{Application.dataPath}/TextFiles/studentScores.txt"));
+        //this works to add an item to the array, but does not remove the old score
+        //scoreData = new ArrayList(File.ReadAllLines(Application.dataPath + "/TextFiles/studentScores.txt"))
+        //{
+        //    $"{username} - {TopicsScreen.topic}:{score}"
+        //};
+        //File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(String)));
+        //Debug.Log("Score saved");
 
-        foreach (string i in scoreData)
+        scoreData = new ArrayList(File.ReadAllLines(Application.dataPath + "/TextFiles/studentScores.txt"));
+
+        //doesn't work
+        //if (scoreData.Contains(username))
+        
+        //does work
+        //if (scoreData.Contains("noah - Times Tables:228"))
+        //{
+        //    Debug.Log("user already played");
+        //    foreach (string line in scoreData)
+        //    {
+        //        int currentHighScore = int.Parse(line[(line.IndexOf(":") + 1)..]);
+        //        Debug.Log(currentHighScore);
+
+        //        if (line.Contains(username))
+        //        {
+        //            if (currentHighScore >= score)
+        //            {
+        //                break;
+        //            }
+        //            else
+        //            {
+        //                scoreData.Remove(line);
+        //                scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
+        //            }
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
+        //}
+
+        foreach (string line in scoreData)
         {
-            if (i.Contains(username) && (int.Parse(i.Substring(i.IndexOf(":") + 1)) >= score))
+            int currentHighScore = int.Parse(line[(line.IndexOf(":") + 1)..]);
+            Debug.Log(currentHighScore);
+            if (line.Contains(username))
             {
-                break;
-            }
-            else if (i.Contains(username) && (int.Parse(i.Substring(i.IndexOf(":") + 1)) < score))
-            {
-                scoreData.Remove(i);
-                scoreData.Add(username + ":" + score);
-                File.WriteAllLines($"{Application.dataPath}/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(string)));
-            }
-            else if (!i.Contains(username))
-            {
-                scoreData.Add(username + ":" + score);
+                containsUser = true;
+                
+                //Debug.Log($"{line} contains username");
+                //Debug.Log(line.Substring(line.IndexOf("-") + 1, line.IndexOf(":") - line.IndexOf("-") - 1));
 
-                File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(string)));
+                if (line.Substring(line.IndexOf("-") + 1, line.IndexOf(":") - line.IndexOf("-") - 1) == TopicsScreen.topic)
+                //if (line.Contains(TopicsScreen.topic))
+                {
+                    isTopicCurrent = true;
+                    if (currentHighScore >= score)
+                    {
+                        Debug.Log("score not higher");
+                        newHighScore = false;
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log("new high score");
+                        newHighScore = true;
+                        temp = line;
+                        break;
+                    }
+                }
+                else
+                {
+                    //isTopicCurrent = false;
+                    //temp = line;
+                    isTopicCurrent= false;
+                    continue;
+                }
+            }
+            else
+            {
+                containsUser = false;
+                temp = line;
             }
         }
+
+        if (containsUser && isTopicCurrent)
+        {
+            if (newHighScore)
+            {
+                scoreData.Remove(temp);
+                scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
+            }
+        }
+        else
+        {
+            scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
+        }
+
+        File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (string[])scoreData.ToArray(typeof(string)));
+
+
+
+        //foreach (var i in scoreData)
+        //{
+        //    int userHighScore = int.Parse(i.ToString()[(i.ToString().IndexOf(":") + 1)..]);
+        //    Debug.Log(userHighScore);
+
+        ////    if (i.ToString().Contains(username) && (int.Parse(i.ToString().Substring(i.ToString().IndexOf(":") + 1)) >= score))
+        ////    FormatException: Input string was not in a correct format.
+        //    if (i.ToString().Contains(username) && userHighScore >= score)
+        //    {
+        //        break;
+        //    }
+        //    else if (i.ToString().Contains(username) && (int.Parse(i.ToString().Substring(i.ToString().IndexOf(":") + 1)) < score))
+        //    else if (i.ToString().Contains(username) && userHighScore < score)
+        //            {
+        //                scoreData.Remove(i);
+        //                scoreData.Add(username + ":" + score);
+        //                File.WriteAllLines($"{Application.dataPath}/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(string)));
+        //                File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(String)));
+        //                Debug.Log("score saved");
+        //            }
+        //            else
+        //            {
+        //                scoreData.Add(username + ":" + score);
+
+        //                File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(String)));
+        //                Debug.Log("score saved");
+        //            }
+        //}
     }
 }

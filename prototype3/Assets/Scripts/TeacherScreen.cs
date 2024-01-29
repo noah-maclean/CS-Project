@@ -12,12 +12,14 @@ public class TeacherScript : MonoBehaviour
     public Button studentScoresButton;
     public Button addLoginsButton;
     public Button removeLoginsButton;
+    public Button backButton;
 
     private void Start()
     {
         studentScoresButton.onClick.AddListener(studentScoresClicked);
         addLoginsButton.onClick.AddListener(addLoginsClicked);
         removeLoginsButton.onClick.AddListener(removeLoginsClicked);
+        backButton.onClick.AddListener(backClicked);
     }
 
     void studentScoresClicked()
@@ -33,5 +35,10 @@ public class TeacherScript : MonoBehaviour
     void removeLoginsClicked()
     {
         SceneManager.LoadScene("RemoveLogins");
+    }
+
+    void backClicked()
+    {
+        SceneManager.LoadScene("LoginScreen");
     }
 }

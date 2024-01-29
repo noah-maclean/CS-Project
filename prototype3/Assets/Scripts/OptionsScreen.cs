@@ -4,14 +4,15 @@ using UnityEngine.UI;
 
 public class OptionsScreen : MonoBehaviour
 {
-    public Button TopicsButton, TutorialsButton;
+    public Button topicsButton, tutorialsButton, backButton;
 
     private void Start()
     {
         //runs function "topicsClicked" when the topics button is pressed
-        TopicsButton.onClick.AddListener(topicsClicked);
+        topicsButton.onClick.AddListener(topicsClicked);
         //runs function "tutorialsClicked" when tutorials button is pressed
-        TutorialsButton.onClick.AddListener(tutorialsClicked);
+        tutorialsButton.onClick.AddListener(tutorialsClicked);
+        backButton.onClick.AddListener(backClicked);
     }
 
     void topicsClicked()
@@ -24,5 +25,10 @@ public class OptionsScreen : MonoBehaviour
     {
         //loads Tutorials Screen scene
         SceneManager.LoadScene("TutorialsScreen");
+    }
+
+    void backClicked()
+    {
+        SceneManager.LoadScene("LoginScreen");
     }
 }
