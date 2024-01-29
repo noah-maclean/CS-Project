@@ -40,25 +40,21 @@ public class GameOverScreen : MonoBehaviour
         username = PlayerPrefs.GetString("username");
 
         //total score = 300
-        //score cannot be accessed as the Player object is not in the game over scene, so it cannot be found
+        //timeremaining cannot be accessed as the Player object is not in the game over scene, so it cannot be found
         //PlayerPrefs could be used to solve this issue
-        //if (GameObject.Find("Player").GetComponent<QuestionSpawn>().score > 200)
-        //if (score > 200)
         if (timeRemaining > 60 )
         {
             gameOverLabel.text = "Congratulations!";
-            //score = (int)System.Math.Round(timeRemaining * 3.33f, 0);
         }
-        //else if (GameObject.Find("Player").GetComponent<QuestionSpawn>().score > 100)
+
         else if (timeRemaining > 30)
         {
             gameOverLabel.text = "Well done!";
-            //score = (int)System.Math.Round(timeRemaining * 3.33f, 0);
         }
+
         else
         {
             gameOverLabel.text = "Unlucky, try again";
-            //score = (int)System.Math.Round(timeRemaining * 3.33f, 0);
         }
 
         score = (int)System.Math.Round(timeRemaining * 5, 0);
@@ -69,10 +65,8 @@ public class GameOverScreen : MonoBehaviour
         }
 
         saveUserScore();
-        //scoreDescription.text = $"Your score was: {GameObject.Find("Player").GetComponent<QuestionSpawn>().score}/300";
-        scoreDescription.text = $"Your score was: {score}/300";
 
-        //GameObject.Find("Player").GetComponent<QuestionSpawn>().score.ToString()
+        scoreDescription.text = $"Your score was: {score}/300";
     }
 
     private void backClicked()
@@ -82,71 +76,33 @@ public class GameOverScreen : MonoBehaviour
 
     void saveUserScore()
     {
-        //this works to add an item to the array, but does not remove the old score
-        //scoreData = new ArrayList(File.ReadAllLines(Application.dataPath + "/TextFiles/studentScores.txt"))
-        //{
-        //    $"{username} - {TopicsScreen.topic}:{score}"
-        //};
-        //File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(String)));
-        //Debug.Log("Score saved");
-
         scoreData = new ArrayList(File.ReadAllLines(Application.dataPath + "/TextFiles/studentScores.txt"));
-
-        //doesn't work
-        //if (scoreData.Contains(username))
-        
-        //does work
-        //if (scoreData.Contains("noah - Times Tables:228"))
-        //{
-        //    Debug.Log("user already played");
-        //    foreach (string line in scoreData)
-        //    {
-        //        int currentHighScore = int.Parse(line[(line.IndexOf(":") + 1)..]);
-        //        Debug.Log(currentHighScore);
-
-        //        if (line.Contains(username))
-        //        {
-        //            if (currentHighScore >= score)
-        //            {
-        //                break;
-        //            }
-        //            else
-        //            {
-        //                scoreData.Remove(line);
-        //                scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
-        //            }
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
-        //}
 
         foreach (string line in scoreData)
         {
             int currentHighScore = int.Parse(line[(line.IndexOf(":") + 1)..]);
-            Debug.Log(currentHighScore);
+
+            //if the user has already got a saved score:
             if (line.Contains(username))
             {
                 containsUser = true;
                 
-                //Debug.Log($"{line} contains username");
-                //Debug.Log(line.Substring(line.IndexOf("-") + 1, line.IndexOf(":") - line.IndexOf("-") - 1));
-
-                if (line.Substring(line.IndexOf("-") + 1, line.IndexOf(":") - line.IndexOf("-") - 1) == TopicsScreen.topic)
-                //if (line.Contains(TopicsScreen.topic))
+                //if the score that is being saved is the same topic as the score that is already saved:
+                if (line.Contains(TopicsScreen.topic))
                 {
                     isTopicCurrent = true;
+
+                    //if current score is not higher than their previous score then don't save score
                     if (currentHighScore >= score)
                     {
-                        Debug.Log("score not higher");
+                        //Debug.Log("score not higher");
                         newHighScore = false;
                         break;
                     }
+                    //if current score is higher than the previous score then save the score
                     else
                     {
-                        Debug.Log("new high score");
+                        //Debug.Log("new high score");
                         newHighScore = true;
                         temp = line;
                         break;
@@ -154,8 +110,7 @@ public class GameOverScreen : MonoBehaviour
                 }
                 else
                 {
-                    //isTopicCurrent = false;
-                    //temp = line;
+                    //if the topic in this string is not the samme as the topic to be saved then continue the loop
                     isTopicCurrent= false;
                     continue;
                 }
@@ -167,50 +122,24 @@ public class GameOverScreen : MonoBehaviour
             }
         }
 
+        
         if (containsUser && isTopicCurrent)
         {
+            //if the user already has a score with the same topic that is lower than their new score:
             if (newHighScore)
             {
+                //remove the old score and add the new score
                 scoreData.Remove(temp);
                 scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
             }
         }
+        //else if the user doesn't already have a saved score at all or for this topic:
         else
         {
+            //add their new score
             scoreData.Add($"{username}-{TopicsScreen.topic}:{score}");
         }
 
         File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (string[])scoreData.ToArray(typeof(string)));
-
-
-
-        //foreach (var i in scoreData)
-        //{
-        //    int userHighScore = int.Parse(i.ToString()[(i.ToString().IndexOf(":") + 1)..]);
-        //    Debug.Log(userHighScore);
-
-        ////    if (i.ToString().Contains(username) && (int.Parse(i.ToString().Substring(i.ToString().IndexOf(":") + 1)) >= score))
-        ////    FormatException: Input string was not in a correct format.
-        //    if (i.ToString().Contains(username) && userHighScore >= score)
-        //    {
-        //        break;
-        //    }
-        //    else if (i.ToString().Contains(username) && (int.Parse(i.ToString().Substring(i.ToString().IndexOf(":") + 1)) < score))
-        //    else if (i.ToString().Contains(username) && userHighScore < score)
-        //            {
-        //                scoreData.Remove(i);
-        //                scoreData.Add(username + ":" + score);
-        //                File.WriteAllLines($"{Application.dataPath}/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(string)));
-        //                File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(String)));
-        //                Debug.Log("score saved");
-        //            }
-        //            else
-        //            {
-        //                scoreData.Add(username + ":" + score);
-
-        //                File.WriteAllLines(Application.dataPath + "/TextFiles/studentScores.txt", (String[])scoreData.ToArray(typeof(String)));
-        //                Debug.Log("score saved");
-        //            }
-        //}
     }
 }

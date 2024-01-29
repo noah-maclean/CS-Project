@@ -33,29 +33,12 @@ public class TutorialsLogic : MonoBehaviour
         {
             //creates an array with the tutorial information from the file "tutorials.txt"
             tutorialDetails = new ArrayList(File.ReadAllLines($"{Application.dataPath}/TextFiles/tutorials.txt"));
-            //Debug.Log(tutorialDetails.ToString());
         }
         else
         {
             //if file "tutorials.txt" doesn't exist, sends a debug message
             Debug.Log("Tutorials file doesn't exist");
         }
-
-
-
-        //foreach (var item in tutorialDetails)
-        //{
-        //    bool isExists = false;
-        //    if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TutorialsScreen. tutorial))
-        //    {
-        //        tutorialInfo.text = item.ToString().Substring(item.ToString().IndexOf(":") + 1);
-        //        isExists = true;
-        //    }
-        //    else
-        //    {
-        //        Debug.Log(isExists);
-        //    }
-        //}
 
         displayTutorialInfo();
     }

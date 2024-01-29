@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Collections;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -34,7 +36,7 @@ public class Answer : MonoBehaviour
     public GameObject hintPanel;
     public Button hintButton;
     private Button backButton;
-    private TMP_Text hintText;
+    public TMP_Text hintText;
 
 
     //using a public gameobject allowed me to change whether the overlay was active or not
@@ -56,24 +58,12 @@ public class Answer : MonoBehaviour
         //replaced GameObject.Find("Player").GetComponent<QuestionSpawn>() with a variable so that the Find and GetComponent functions will only need to be called once
         questionSpawnScript = GameObject.Find("Player").GetComponent<QuestionSpawn>();
 
-        //overlayTopic = overlayCanvas.GetComponentInChildren<TMP_Text>();
-
         gameObject.SetActive(true);
         hintPanel.SetActive(false);
 
         backButton = hintPanel.GetComponentInChildren<Button>();
         hintButton.onClick.AddListener(hintClicked);
         backButton.onClick.AddListener(backClicked);
-
-        //creates an array with the correct answers for each question
-        //correctAnswers array is created before the questions array is populated
-        //move to QuestionSpawn script and access from there ?
-        //for (int i = 0; i < QuestionSpawn.questions.GetLength(1); i++)
-        //{
-        //    correctAnswers[i] = int.Parse(QuestionSpawn.questions[1, i]);
-        //}
-        
-        
 
         //chooses a random answer to be the correct answer by selecting an integer between 0 and 3
         correctAnsNum = randAns.Next(0, 3);
@@ -84,7 +74,7 @@ public class Answer : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //TODO - change to case statement
+        //TODO - change to switch statement?
 
         if (collision.gameObject == answers[0].gameObject)
         {
@@ -111,20 +101,14 @@ public class Answer : MonoBehaviour
     {
         if (isCorrectAns[num])
         {
+            //if the answer is correct, output "Correct",
+            //move the user to where they were before the questions
+            //set the correct things to be visible
+            //and change the positions and values of the answers based on the next question
             Debug.Log("Correct");
             transform.position = QuestionSpawn.returnLocation;
-            //GameObject.Find("Player").GetComponent<QuestionSpawn>().score += 100;
-
-            //sets the saved value of the score to the updated score
-            //PlayerPrefs.SetInt("playerScore", GameObject.Find("Player").GetComponent<QuestionSpawn>().score);
-
-
-            //questionActive = false;
-
-            //GameObject.Find("OverlayCanvas").SetActive(true);
-            //overlayCanvas.SetActive(true);
+           
             overlayPanel.SetActive(true);
-            //overlayTopic = overlayPanel.GetComponentInChildren<TMP_Text>();
             overlayTopic.enabled = true;
             answersCanvas.SetActive(false);
 
@@ -132,6 +116,9 @@ public class Answer : MonoBehaviour
         }
         else
         {
+            //ig the answer is wrong, output "Incorrect (-15 seconds)"
+            //remove that answer from the screen
+            //take away 15 seconds from the user's time
             Debug.Log("Incorrect (-15 seconds)");
             answers[num].SetActive(false);
             answersTexts[num].enabled = false;
@@ -144,7 +131,7 @@ public class Answer : MonoBehaviour
     //FIXED
     private void changeAnsPosVal()
     {
-        //if (GameObject.Find("Player").GetComponent<QuestionSpawn>().questionNum <= GameObject.Find("Player").GetComponent<QuestionSpawn>().questions.GetLength(0))
+        
         if (questionSpawnScript.questionNum <= questionSpawnScript.questions.GetLength(0))
         {
             for (int i = 0; i < numAnswers; i++)
@@ -154,15 +141,12 @@ public class Answer : MonoBehaviour
 
                 //pos is used as a temporary variable
                 //change pos to int pos = new Vector2(UnityEngine.Random.Range(-60, -40), UnityEngine.Random.Range(-3, 0)) ??
-                //pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
 
-                //changed y values to between -1 and 0, so that all the answers spawn above the user
+                //changed y values to between -1 and 1, so that all the answers spawn above the user
                 pos = new Vector2(randX.Next(-60, -40), randY.Next(-1, 1));
 
                 //if pos is in the answerPositions array, then a new pos value is generated
-                //OR if pos is where the player spawns (x = -50)
-                //while (pos.x == -50 || answerPositions.Contains(pos))
-                //if position is between -52 and -48 (2 either side of 50 (the middle))
+                //OR if position is between -52 and -48 (2 either side of 50 (the middle))
                 while ((pos.x >= -52 && pos.x <= -48) || answerPositions.Contains(pos))
                 {
                     //pos = new Vector2(randX.Next(-60, -40), randY.Next(-3, 0));
@@ -194,38 +178,38 @@ public class Answer : MonoBehaviour
 
                 //using round on val causes the percentages and fractions topics to not load
 
-                //float val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
                 float val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
                 if (integerAns)
                 {
+                    //while the temporary value is already in the array OR the value is the correct answer
                     while (answerValues.Contains((int)Math.Round(val)) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
                     {
-                        //val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
+                        //create a new random value
                         val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
                     }
                 }
                 else
                 {
                     //Contains cannot be used as it does not allow for float to be evaluated
-                    //instead the Any function checks if any number - val is zero 
-                    while (answerValues.Any(num => Math.Abs(num - (float)Math.Round(val, 2)) == 0) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
+                    //instead the Any function checks if any number - val is very small (almost 0)
+                    while (answerValues.Any(num => Math.Abs(num - (float)Math.Round(val, 2)) < 0.01) || val == QuestionSpawn.correctAnswers[questionSpawnScript.questionNum])
                     {
-                        //val = (float)Math.Round(UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2));
                         val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
                     }
-                }
-                
-
-                
+                }         
                 
 
                 if (i == correctAnsNum)
                 {
                     isCorrectAns[i] = true;
+
+                    //if the answer is an integer, display the answer
                     if (integerAns)
                     {
                         answerValues[i] = QuestionSpawn.correctAnswers[questionSpawnScript.questionNum];
                     }
+                    //if answer is not an integer, then round the value to 2 decimal places and make it a float
+                    //so that it is in the same format as the other answers
                     else if (!integerAns)
                     {
                         answerValues[i] = (float)Math.Round(QuestionSpawn.correctAnswers[questionSpawnScript.questionNum], 2);
@@ -248,7 +232,6 @@ public class Answer : MonoBehaviour
                     }
                 }
 
-                //Debug.Log(answerValues[i].ToString());
                 answersTexts[i].text = answerValues[i].ToString();
             }
         }
@@ -256,9 +239,21 @@ public class Answer : MonoBehaviour
 
     private void hintClicked()
     {
+        //make the hint text the information from the tutorial to give the user an explanation of how to solve the questions
+        ArrayList hintDetails = new ArrayList(File.ReadAllLines($"{Application.dataPath}/TextFiles/tutorials.txt"));
+
+        foreach (string line in hintDetails)
+        {
+            //if the string before ":" is equal to the current topic:
+            if (line.Substring(0, line.IndexOf(":")).Equals(TopicsScreen.topic))
+            {
+                //the text on the screen is made the string after the ":"
+                hintText.text = line.Substring(line.IndexOf(":") + 1);
+            }
+        }
+
         hintPanel.SetActive(true);
         gameObject.SetActive(false);
-        // add/change the hint text on the panel
     }
 
     private void backClicked()

@@ -4550,6 +4550,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   hintPanel: {fileID: 1113532109}
   hintButton: {fileID: 1162595749}
+  hintText: {fileID: 949748428}
   overlayCanvas: {fileID: 176952006}
   answersCanvas: {fileID: 35881997}
   overlayPanel: {fileID: 1344988358}

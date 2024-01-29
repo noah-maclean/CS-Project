@@ -38,25 +38,22 @@ public class RemoveLogins : MonoBehaviour
 
         credentials = new ArrayList(File.ReadAllLines(Application.dataPath + "/TextFiles/credentials.txt"));
 
-        foreach (var i in credentials)
+        foreach (string item in credentials)
         {
-            if (i.ToString().Contains(usernameInput.text))
+            if (item.Contains(usernameInput.text))
             {
                 isExists = true;
 
                 //saves the current item in the toRemove variable
-                toRemove = (string)i;
+                toRemove = item;
                 break;
             }
         }
 
         if (isExists)
         {
-            //remove
+            //remove the item to remove
             credentials.Remove(toRemove);
-            
-            //ArrayList needs to be List<string> to use this function
-            //credentials.RemoveAll(x => x.Contains(usernameInput.text));
 
             //uses a temporary file to save the lines that are kept
             var tempFile = Path.GetTempFileName();

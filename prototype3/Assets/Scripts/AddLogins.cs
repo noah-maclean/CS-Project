@@ -39,9 +39,9 @@ public class AddLogins : MonoBehaviour
         credentials = new ArrayList(File.ReadAllLines(Application.dataPath + "/TextFiles/credentials.txt"));
 
         //for every item in credentials, if the item contains the username, isExists = true
-        foreach (var i in credentials)
+        foreach (string i in credentials)
         {
-            if (i.ToString().Contains(usernameInput.text))
+            if (i.Contains(usernameInput.text))
             {
                 isExists = true;
                 break;

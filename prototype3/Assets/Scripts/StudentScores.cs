@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class StudentScores : MonoBehaviour
 {
+    //creates an arraylist that can be used to set the length of the studentScores array
     ArrayList arr = new ArrayList(File.ReadAllLines(Application.dataPath + "/TextFiles/studentScores.txt"));
 
     string[] studentScores;
@@ -37,6 +38,7 @@ public class StudentScores : MonoBehaviour
 
     void displayScores()
     {
+        //combines the data from studentScores with a line break after each item
         scoreData = String.Join("\n", studentScores);
 
         scoresText.text = scoreData;
