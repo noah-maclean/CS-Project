@@ -1,4 +1,4 @@
-How To Play: Use the WASD or arrow keys to move around. Press the space bar to jump. Move through the question areas to get a question to answer. Answer questions to get points. Reach the finish line before the time runs out to complete the level.
+How To Play: Use the WASD or arrow keys to move around. Press the space bar to jump. Move into the orange question areas to get a question to answer. Touch the correct answer to continue and avoid the wrong ones! Reach the finish line before the time runs out to complete the level (the faster you complete the level, the more points you get)
 Times Tables: You know how to solve times tables! 
 Place Value: When working out the place value of a number, work out which column it is in and therefore how many placeholders (zeroes) you will need on the right of the number. E.g. the 5 in 457 has a place value of 50
 Percentages: To work out a percentage as a decimal, you need to divide a percentage by 100. E.g. 35% = 0.35

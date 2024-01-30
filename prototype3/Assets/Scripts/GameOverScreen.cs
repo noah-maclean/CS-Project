@@ -23,9 +23,6 @@ public class GameOverScreen : MonoBehaviour
 
     private void Start()
     {
-        //gets the score value from the saved int
-        //score = PlayerPrefs.GetInt("playerScore");
-
         backButton.onClick.AddListener(backClicked);
 
         timeRemaining = PlayerPrefs.GetFloat("RemainingTime");
@@ -36,14 +33,18 @@ public class GameOverScreen : MonoBehaviour
         //PlayerPrefs could be used to solve this issue
         if (timeRemaining > 60)
         {
-            gameOverLabel.text = "Congratulations!";
+            gameOverLabel.text = "Congratulations! You got the highest score!";
         }
 
         else if (timeRemaining > 30)
         {
-            gameOverLabel.text = "Well done!";
+            gameOverLabel.text = "Well done! Could you get more points next time?";
         }
 
+        else if (timeRemaining == 0)
+        {
+            gameOverLabel.text = "Good effort. Try and get a higher score next time!";
+        }
         else
         {
             gameOverLabel.text = "Unlucky, try again";

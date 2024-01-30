@@ -17,8 +17,6 @@ public class TutorialsLogic : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(TutorialsScreen.tutorial);
-
         //displays value of tutorial from the tutorialsScreen script 
         tutorialLabel.text = TutorialsScreen.tutorial.ToUpper();
 
