@@ -2286,7 +2286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.8039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4550,6 +4550,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   hintPanel: {fileID: 1113532109}
   hintButton: {fileID: 1162595749}
+  backButton: {fileID: 0}
   hintText: {fileID: 949748428}
   overlayCanvas: {fileID: 176952006}
   answersCanvas: {fileID: 35881997}
