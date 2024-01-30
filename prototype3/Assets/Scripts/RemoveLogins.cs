@@ -1,23 +1,20 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using TMPro;
 using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class RemoveLogins : MonoBehaviour
 {
     public TMP_InputField usernameInput;
-    public Button removeButton;
-    public Button backButton;
+    public Button removeButton, backButton;
 
     ArrayList credentials;
     private string toRemove;
 
-    private void Start()    
+    private void Start()
     {
         removeButton.onClick.AddListener(removeFromFile);
         backButton.onClick.AddListener(backClicked);

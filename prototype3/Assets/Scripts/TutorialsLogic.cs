@@ -1,18 +1,15 @@
 using System.Collections;
 using System.IO;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class TutorialsLogic : MonoBehaviour
 {
     [HideInInspector] public static string tutorial;
 
-    public TMP_Text tutorialLabel;
-    public TMP_Text tutorialInfo;
+    public TMP_Text tutorialLabel, tutorialInfo;
     public Button BackButton;
 
 
@@ -47,13 +44,13 @@ public class TutorialsLogic : MonoBehaviour
     void displayTutorialInfo()
     {
         //loops through each item in the tutorialDetails array (every line of the tutorials.txt file)
-        foreach (var item in tutorialDetails)
+        foreach (string item in tutorialDetails)
         {
             //if the string before ":" is equal to the current tutorial:
-            if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TutorialsScreen.tutorial))
+            if (item.Substring(0, item.IndexOf(":")).Equals(TutorialsScreen.tutorial))
             {
                 //the text on the screen is made the string after the ":"
-                tutorialInfo.text = item.ToString().Substring(item.ToString().IndexOf(":") + 1);
+                tutorialInfo.text = item.Substring(item.IndexOf(":") + 1);
             }
         }
     }

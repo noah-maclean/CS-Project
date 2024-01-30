@@ -1,22 +1,16 @@
-using System;
-using System.Collections;
-using System.IO;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class OverlayLogic : MonoBehaviour
 {
-    public TMP_Text timerText;
-    public TMP_Text topicText;
+    public TMP_Text timerText, topicText;
 
     //timeRemaining in seconds
     [HideInInspector] public float timeRemaining = 90;
     [HideInInspector] public static string topic;
 
-    public GameObject overlayCanvas;    
+    public GameObject overlayCanvas;
 
     private void Start()
     {
@@ -26,7 +20,7 @@ public class OverlayLogic : MonoBehaviour
     private void Update()
     {
         //if there is a topic:
-        if (TopicsScreen.topic != null )
+        if (TopicsScreen.topic != null)
         {
             //topic text is the value of topic in uppercase
             topicText.text = TopicsScreen.topic.ToUpper();

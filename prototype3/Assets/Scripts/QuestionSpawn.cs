@@ -1,7 +1,5 @@
 using System.Collections;
 using System.IO;
-using System.Security.Cryptography;
-using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,57 +17,35 @@ public class QuestionSpawn : MonoBehaviour
 
     public GameObject questionArea;
 
-    // public TMP_Text questionLabel;
-    // public TMP_Text questionText;
-    // public TMP_InputField questionAnswer;
-    // public Button submitButton;
-
     public TMP_Text questionText;
 
     //array containing the positions that the question area will appear in throughout the game
     //random positions could be implemented to make the game more varied
     //random positions could also be implemented for the platforms so that multiple environments wouldn't need to be made 
-    [HideInInspector] public static Vector2[] questionAreaPositions = new[] { new Vector2 ( 4f, 0f ),
+    [HideInInspector]
+    public static Vector2[] questionAreaPositions = new[] { new Vector2 ( 4f, 0f ),
                                                             new Vector2 ( 33f, 0f ),
                                                             new Vector2 ( 60f, 0f ) };
 
-    //2D array containing the questions and their answers
-    //[HideInInspector] public static string[,] questions = new string[,] { { "What is 7 + 5?", "What is 9 + 1?", "What is 10 - 4?" }, 
-    //{ "12", "10", "6" } };
-
     ArrayList questionData;
-    public string[,] questions = new string[2,3];
+    public string[,] questions = new string[2, 3];
 
     public static float[] correctAnswers = new float[3];
 
     [HideInInspector] public int questionNum;
-    //[HideInInspector] public int score;
 
-    //GameObject overlay = GameObject.Find("OverlayCanvas");
-    public GameObject overlayCanvas;
-    public GameObject answersCanvas;
+    public GameObject overlayCanvas, answersCanvas;
 
     public GameObject overlayPanel;
     public TMP_Text overlayTopic;
-
-    //public bool questionActive;
-
 
     public void Start()
     {
         //initiates question number to 0
         questionNum = 0;
 
-        //initiates score to 0
-        //score = 0;
-
-        //Debug.Log(questions.GetLength(0));
-        //PlayerPrefs.SetInt("playerScore", 0);
-        //PlayerPrefs.SetInt("remainingTime", 0);
-
         answersCanvas.SetActive(false);
         overlayPanel.SetActive(true);
-        //overlayTopic = overlayCanvas.GetComponentInChildren<TMP_Text>();
         overlayTopic.enabled = true;
 
         if (File.Exists($"{Application.dataPath}/TextFiles/questionData.txt"))
@@ -81,28 +57,19 @@ public class QuestionSpawn : MonoBehaviour
             Debug.Log("Question data file doesn't exist");
         }
 
-        //foreach var item{
-        //    if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TutorialsScreen.tutorial))
-        //        add up to; to questions array[0]
-        // add from; to end to questions array[1]
-        // }
-
         int count = 0;
-        foreach (var item in questionData)
+        foreach (string item in questionData)
         {
             if (TopicsScreen.topicVal != null)
             {
-                if (item.ToString().Substring(0, item.ToString().IndexOf(":")).Equals(TopicsScreen.topicVal))
-                //if (item.ToString()[..item.ToString().IndexOf(":")] == TopicsScreen.topicVal)
+                if (item.Substring(0, item.IndexOf(":")).Equals(TopicsScreen.topicVal))
                 {
-                    int index1 = item.ToString().IndexOf(":");
-                    int index2 = item.ToString().IndexOf(";");
+                    int index1 = item.IndexOf(":");
+                    int index2 = item.IndexOf(";");
 
                     //takes the substring from the index after ":" with the length of (index2 - index1 - 1)
-                    questions[0, count] = item.ToString().Substring(index1 + 1, index2 - index1 - 1);
-                    questions[1, count] = item.ToString().Substring(index2 + 1, item.ToString().Length - index2 - 1);
-
-                    //Debug.Log(questions[0, count] + questions[1, count]);
+                    questions[0, count] = item.Substring(index1 + 1, index2 - index1 - 1);
+                    questions[1, count] = item.Substring(index2 + 1, item.Length - index2 - 1);
 
                     count++;
                 }
@@ -129,11 +96,9 @@ public class QuestionSpawn : MonoBehaviour
             //to allow the timer to be shown when the question is being answered
             //could set only certain parts of the overlayCanvas to false
             //(just the panel and the topic text)
-            
-            //overlayCanvas.SetActive(false);
             overlayPanel.SetActive(false);
             overlayTopic.enabled = false;
-            
+
             answersCanvas.SetActive(true);
 
             Debug.Log($"Question {questionNum + 1}");

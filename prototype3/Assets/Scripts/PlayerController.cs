@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -26,7 +24,7 @@ public class PlayerController : MonoBehaviour
             //player velocity stays the same on the x axis but the jumpHeight variable is added on the y axis
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
-        
+
 
         //if the user is not pressing the jump button and the upwards velocity is greater than 0:
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -64,4 +62,3 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
-    

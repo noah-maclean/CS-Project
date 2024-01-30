@@ -1,10 +1,5 @@
-using Microsoft.Win32.SafeHandles;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,8 +8,7 @@ using UnityEngine.UI;
 
 public class GameOverScreen : MonoBehaviour
 {
-    public TMP_Text gameOverLabel;
-    public TMP_Text scoreDescription;
+    public TMP_Text gameOverLabel, scoreDescription;
     public Button backButton;
 
     private int score;
@@ -23,11 +17,9 @@ public class GameOverScreen : MonoBehaviour
     private string username;
     ArrayList scoreData;
 
-    bool containsUser;
-    bool newHighScore;
-    bool isTopicCurrent;
+    bool containsUser, newHighScore, isTopicCurrent;
     string temp;
-    
+
 
     private void Start()
     {
@@ -42,7 +34,7 @@ public class GameOverScreen : MonoBehaviour
         //total score = 300
         //timeremaining cannot be accessed as the Player object is not in the game over scene, so it cannot be found
         //PlayerPrefs could be used to solve this issue
-        if (timeRemaining > 60 )
+        if (timeRemaining > 60)
         {
             gameOverLabel.text = "Congratulations!";
         }
@@ -61,7 +53,7 @@ public class GameOverScreen : MonoBehaviour
 
         if (score > 300)
         {
-            score = 300; 
+            score = 300;
         }
 
         saveUserScore();
@@ -71,7 +63,7 @@ public class GameOverScreen : MonoBehaviour
 
     private void backClicked()
     {
-        SceneManager.LoadScene("OptionsScreen");        
+        SceneManager.LoadScene("OptionsScreen");
     }
 
     void saveUserScore()
@@ -86,7 +78,7 @@ public class GameOverScreen : MonoBehaviour
             if (line.Contains(username))
             {
                 containsUser = true;
-                
+
                 //if the score that is being saved is the same topic as the score that is already saved:
                 if (line.Contains(TopicsScreen.topic))
                 {
@@ -111,7 +103,7 @@ public class GameOverScreen : MonoBehaviour
                 else
                 {
                     //if the topic in this string is not the samme as the topic to be saved then continue the loop
-                    isTopicCurrent= false;
+                    isTopicCurrent = false;
                     continue;
                 }
             }
@@ -122,7 +114,7 @@ public class GameOverScreen : MonoBehaviour
             }
         }
 
-        
+
         if (containsUser && isTopicCurrent)
         {
             //if the user already has a score with the same topic that is lower than their new score:

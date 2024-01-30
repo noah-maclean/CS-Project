@@ -1,18 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
+using UnityEngine.UI;
 
 public class TeacherScript : MonoBehaviour
 {
-    public Button studentScoresButton;
-    public Button addLoginsButton;
-    public Button removeLoginsButton;
-    public Button backButton;
+    public Button studentScoresButton, addLoginsButton, removeLoginsButton, backButton;
 
     private void Start()
     {

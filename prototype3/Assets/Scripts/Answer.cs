@@ -1,12 +1,11 @@
 using System;
-using System.IO;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 public class Answer : MonoBehaviour
 {
@@ -34,8 +33,7 @@ public class Answer : MonoBehaviour
     private bool integerAns;
 
     public GameObject hintPanel;
-    public Button hintButton;
-    private Button backButton;
+    public Button hintButton, backButton;
     public TMP_Text hintText;
 
 
@@ -50,7 +48,7 @@ public class Answer : MonoBehaviour
     public OverlayLogic overlayLogic;
     //public QuestionSpawn questionSpawn;
 
-    
+
     private QuestionSpawn questionSpawnScript;
 
     private void Start()
@@ -107,7 +105,7 @@ public class Answer : MonoBehaviour
             //and change the positions and values of the answers based on the next question
             Debug.Log("Correct");
             transform.position = QuestionSpawn.returnLocation;
-           
+
             overlayPanel.SetActive(true);
             overlayTopic.enabled = true;
             answersCanvas.SetActive(false);
@@ -131,7 +129,7 @@ public class Answer : MonoBehaviour
     //FIXED
     private void changeAnsPosVal()
     {
-        
+
         if (questionSpawnScript.questionNum <= questionSpawnScript.questions.GetLength(0))
         {
             for (int i = 0; i < numAnswers; i++)
@@ -196,8 +194,8 @@ public class Answer : MonoBehaviour
                     {
                         val = UnityEngine.Random.Range(1, QuestionSpawn.correctAnswers[questionSpawnScript.questionNum] * 2);
                     }
-                }         
-                
+                }
+
 
                 if (i == correctAnsNum)
                 {
@@ -223,7 +221,7 @@ public class Answer : MonoBehaviour
                     //if the number is an integer, then round the value to no decimal places and make it an int
                     if (integerAns)
                     {
-                        answerValues[i] = (int)Math.Round(val); 
+                        answerValues[i] = (int)Math.Round(val);
                     }
                     //if number is not an integer, then round the value to 2 decimal places and make it a float
                     else if (!integerAns)

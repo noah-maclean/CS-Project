@@ -1,18 +1,15 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AddLogins : MonoBehaviour
 {
-    public TMP_InputField usernameInput;
-    public TMP_InputField passwordInput;
-    public Button addButton;
-    public Button backButton;
+    public TMP_InputField usernameInput, passwordInput;
+    public Button addButton, backButton;
 
     ArrayList credentials;
 
@@ -66,7 +63,7 @@ public class AddLogins : MonoBehaviour
         }
 
         //resets the input fields to null
-        usernameInput.text = null; 
+        usernameInput.text = null;
         passwordInput.text = null;
     }
 
