@@ -27,7 +27,7 @@ public class LoginScreen : MonoBehaviour
         else
         {
            //if file "credentials.txt" doesn't exist, sends a debug message
-            Debug.Log("Credential file doesn't exist");
+            Debug.Log("Credentials file doesn't exist");
         }
     }
 
@@ -69,6 +69,9 @@ public class LoginScreen : MonoBehaviour
         {
             //outputs "Logging in 'username'" and runs loadOptionsScreen function
             Debug.Log($"Logging in {UsernameInput.text}");
+
+            //saves the username of the student
+            PlayerPrefs.SetString("username", UsernameInput.text);
             loadOptionsScreen();
         }
         else

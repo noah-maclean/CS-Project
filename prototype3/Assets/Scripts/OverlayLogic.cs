@@ -1,41 +1,26 @@
-using System;
-using System.Collections;
-using System.IO;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class OverlayLogic : MonoBehaviour
 {
-    public TMP_Text scoreText;
-    public TMP_Text topicText;
-    private static int score;
+    public TMP_Text timerText, topicText;
+
+    //timeRemaining in seconds
+    [HideInInspector] public float timeRemaining = 90;
     [HideInInspector] public static string topic;
-    //[HideInInspector] public bool questionActive;
 
     public GameObject overlayCanvas;
 
-    
-
     private void Start()
     {
-        //GameObject.Find("Player").GetComponent<Answer>().questionActive = false;
-        //gameObject.SetActive(true);
         overlayCanvas.SetActive(true);
     }
 
     private void Update()
     {
-        //score is updated as soon as score changes in the questionLogic script
-        score = GameObject.Find("Player").GetComponent<QuestionSpawn>().score;
-
-        //displays the score on the screen
-        scoreText.text = $"Score: {score}";
-        
         //if there is a topic:
-        if (TopicsScreen.topic != null )
+        if (TopicsScreen.topic != null)
         {
             //topic text is the value of topic in uppercase
             topicText.text = TopicsScreen.topic.ToUpper();
@@ -47,7 +32,43 @@ public class OverlayLogic : MonoBehaviour
             topicText.text = "Test/Error (no topic)";
         }
 
-        //add timer to screen
-        //if timer = 0, change to gameOver screen 
+        if (timeRemaining > 0)
+        {
+            //if their is time remaining then decrease the time
+            timeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            timeRemaining = 0;
+            loadGameOver();
+        }
+
+        displayTime();
+
+        //saves the timeRemaining on every frame, so that if the user completes the game
+        //then their remaining time is already saved
+        PlayerPrefs.SetFloat("RemainingTime", timeRemaining);
+    }
+
+    private void displayTime()
+    {
+        if (timeRemaining < 0)
+        {
+            timeRemaining = 0;
+        }
+
+        //mins = time remaining divided by 60 and rounded down to an integer 
+        float minutes = Mathf.FloorToInt(timeRemaining / 60);
+        //secs = time remaining mod 60 and rounded down to an int
+        float seconds = Mathf.FloorToInt(timeRemaining % 60);
+
+        //displays the time in the correct format
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    void loadGameOver()
+    {
+        SceneManager.LoadScene("GameOver");
+        PlayerPrefs.SetFloat("RemainingTime", timeRemaining);
     }
 }

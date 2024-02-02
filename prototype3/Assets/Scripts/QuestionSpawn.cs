@@ -1,3 +1,5 @@
+using System.Collections;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,11 +17,6 @@ public class QuestionSpawn : MonoBehaviour
 
     public GameObject questionArea;
 
-    // public TMP_Text questionLabel;
-    // public TMP_Text questionText;
-    // public TMP_InputField questionAnswer;
-    // public Button submitButton;
-
     public TMP_Text questionText;
 
     //array containing the positions that the question area will appear in throughout the game
@@ -30,32 +27,64 @@ public class QuestionSpawn : MonoBehaviour
                                                             new Vector2 ( 33f, 0f ),
                                                             new Vector2 ( 60f, 0f ) };
 
-    //2D array containing the questions and their answers
-    [HideInInspector] public static string[,] questions = new string[,] { { "What is 7 + 5?", "What is 9 + 1?", "What is 10 - 4?" }, 
-                                                                          { "12", "10", "6" } };
+    ArrayList questionData;
+    public string[,] questions = new string[2, 3];
+
+    public static float[] correctAnswers = new float[3];
 
     [HideInInspector] public int questionNum;
-    [HideInInspector] public int score;
 
-    //GameObject overlay = GameObject.Find("OverlayCanvas");
-    public GameObject overlayCanvas;
-    public GameObject answersCanvas;
+    public GameObject overlayCanvas, answersCanvas;
 
-    //public bool questionActive;
-
+    public GameObject overlayPanel;
+    public TMP_Text overlayTopic;
 
     public void Start()
     {
         //initiates question number to 0
         questionNum = 0;
 
-        //initiates score to 0
-        score = 0;
-
-        //Debug.Log(questions.GetLength(0));
-        PlayerPrefs.SetInt("playerScore", 0);
-
         answersCanvas.SetActive(false);
+        overlayPanel.SetActive(true);
+        overlayTopic.enabled = true;
+
+        if (File.Exists($"{Application.dataPath}/TextFiles/questionData.txt"))
+        {
+            questionData = new ArrayList(File.ReadAllLines($"{Application.dataPath}/TextFiles/questionData.txt"));
+        }
+        else
+        {
+            Debug.Log("Question data file doesn't exist");
+        }
+
+        int count = 0;
+        foreach (string item in questionData)
+        {
+            if (TopicsScreen.topicVal != null)
+            {
+                if (item.Substring(0, item.IndexOf(":")).Equals(TopicsScreen.topicVal))
+                {
+                    int index1 = item.IndexOf(":");
+                    int index2 = item.IndexOf(";");
+
+                    //takes the substring from the index after ":" with the length of (index2 - index1 - 1)
+                    questions[0, count] = item.Substring(index1 + 1, index2 - index1 - 1);
+                    questions[1, count] = item.Substring(index2 + 1, item.Length - index2 - 1);
+
+                    count++;
+                }
+            }
+            else
+            {
+                Debug.Log("Error, no topic");
+            }
+        }
+
+        for (int i = 0; i < questions.GetLength(1); i++)
+        {
+            //TODO make these numbers float somehow?! (DONE)
+            correctAnswers[i] = float.Parse(questions[1, i]);
+        }
     }
 
 
@@ -64,8 +93,12 @@ public class QuestionSpawn : MonoBehaviour
         //if the game object that the player has collided with has the "Question" tag:
         if (collision.gameObject.tag == "Question")
         {
-            
-            overlayCanvas.SetActive(false);
+            //to allow the timer to be shown when the question is being answered
+            //could set only certain parts of the overlayCanvas to false
+            //(just the panel and the topic text)
+            overlayPanel.SetActive(false);
+            overlayTopic.enabled = false;
+
             answersCanvas.SetActive(true);
 
             Debug.Log($"Question {questionNum + 1}");
@@ -81,7 +114,7 @@ public class QuestionSpawn : MonoBehaviour
             questionNum++;
 
             //moves questionArea to next position
-            //questions.GetLength(0) returns 2 so must use <=
+            //questions.GetLength(0) returns 2 when length is 3 so must use <=
             if (questionNum <= questions.GetLength(0))
             {
                 questionArea.transform.position = questionAreaPositions[questionNum];

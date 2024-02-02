@@ -35,4 +35,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TeacherScreen.unity
     guid: c22eeb988801aab4f80d5f5c93bbc90a
+  - enabled: 1
+    path: Assets/Scenes/AddLogins.unity
+    guid: 711ea3861f4ec82439217527cdfb0658
+  - enabled: 1
+    path: Assets/Scenes/StudentScores.unity
+    guid: 53fb73b8f8bc4dc49ade474e71c91d1a
+  - enabled: 1
+    path: Assets/Scenes/RemoveLogins.unity
+    guid: d6d4c79ce4ad80944b14bf3c11a8dfd4
   m_configObjects: {}

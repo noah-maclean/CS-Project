@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class TopicsScreen : MonoBehaviour
 {
     public static string topic;
+    public static string topicVal;
     public Button TimesTableButton, PlaceValueButton, PercentagesButton, BidmasButton, FractionsButton, TimeButton, BackButton;
     private void Start()
     {
@@ -22,36 +23,42 @@ public class TopicsScreen : MonoBehaviour
     private void timesTableClicked()
     {
         topic = "Times Tables";
+        topicVal = "timesTables";
         SceneManager.LoadScene("MainGame");
     }
 
     private void placeValueClicked()
     {
         topic = "Place Value";
+        topicVal = "placeValue";
         SceneManager.LoadScene("MainGame");
     }
 
     private void percentagesClicked()
     {
         topic = "Percentages";
+        topicVal = "percentages";
         SceneManager.LoadScene("MainGame");
     }
 
     private void bidmasClicked()
     {
         topic = "Bidmas";
+        topicVal = "bidmas";
         SceneManager.LoadScene("MainGame");
     }
 
     private void fractionsClicked()
     {
         topic = "Fractions";
+        topicVal = "fractions";
         SceneManager.LoadScene("MainGame");
     }
 
     private void timeClicked()
     {
         topic = "Time";
+        topicVal = "time";
         SceneManager.LoadScene("MainGame");
     }
 

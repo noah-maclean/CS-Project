@@ -1,1 +1,17 @@
 topic:question;answer
+timesTables:3 x 6 = ?;18
+timesTables:7 x 3 = ?;21
+timesTables:2 x 5 = ?;10
+placeValue:What is the value of the 3 in 731?;30
+placeValue:How many tens are in 53?;5
+placeValue:Which number is in the units place in 412?;2
+percentages:What is 10% as a decimal?;0.1
+percentages:What is 25% as a decimal?;0.25
+percentages:What is 9% as a decimal?;0.09
+bidmas:12 - 3 x 2 = ?;6
+bidmas:19 + 3 - 12 / 4 = ?;19
+bidmas:5 x 5 + 2 x 6 = ?;37
+fractions:What is 4/10 as a decimal?;0.4
+fractions:What is 20/25 as a decimal?;0.8
+fractions:What is 19/10 as a deciaml?;1.9
+time:

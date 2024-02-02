@@ -54,7 +54,7 @@ public class TutorialsScreen : MonoBehaviour
     private void fractionsClicked()
     {
         tutorial = "Fractions";
-        SceneManager.LoadScene("Tutorial"); 
+        SceneManager.LoadScene("Tutorial");
     }
 
 
